@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Septiembre 7 - Sesión intro a React JC</title>
+  <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+  <style>
+    .input-error {
+      border: 2px solid red;
+      background-color: #ffe6e6;
+    }
+
+    .error-message {
+      color: red;
+    }
+
+    .success-message {
+      color: green;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Punto de entrada -->
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const root = document.getElementById("root")
+    function LoginApp() {
+      const { useState } = React;
+
+      const [username, setUsername] = useState("");
+      const [password, setPassword] = useState("");
+      const [message, setMessage] = useState("");
+
+      const validUsername = "admin"
+      const validPassword = "JovenesCreativos"
+
+      const login = (event) => {
+        event.preventDefault();
+
+        if (username === validUsername && password === validPassword) {
+          setMessage("¡Inicio de sesión exitoso!")
+        } else {
+          setMessage("Nombre de usuario o contraseña incorrectos")
+        }
+      }
+
+      return (
+        <div>
+          <h1>Inicia sesión</h1>
+          <form onSubmit={login}>
+            <div>
+              <label>Nombre de usuario: </label>
+              <input
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              />
+            </div>
+            <div>
+              <label>Contraseña: </label>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
+            <button
+              type="submit"
+            >Iniciar sesión
+            </button>
+          </form>
+          {
+            message && <p
+              className={message.includes("exitoso") ? "success-message" : "error-message"}
+            >{message}</p>
+          }
+        </div>
+      )
+    }
+
+    ReactDOM.render(<LoginApp />, root)
+  </script>
+</body>
+
+</html>
